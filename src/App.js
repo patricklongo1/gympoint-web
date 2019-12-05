@@ -5,5 +5,4 @@ function App() {
     <h1>GymPoint</h1>
   );
 }
-
 export default App;
