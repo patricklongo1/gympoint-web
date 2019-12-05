@@ -13,7 +13,7 @@ export default function Routes() {
       <Route path="/" exact component={SignIn} />
       <Route path="/register" component={SignUp} />
 
-      <Route path="/student" component={StudentList} isPrivate />
+      <Route path="/student" component={StudentList} isPrivate isList />
       <Route path="/" component={() => <h1>Error 404 - Not Found</h1>} />
     </Switch>
   );
