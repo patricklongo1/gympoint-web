@@ -1,9 +1,11 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import Header from '../../components/Header';
 
 export default function StudentList() {
   return (
-    <h1>Lista de alunos</h1>
+    <>
+      <Header />
+      <h1>Lista de alunos</h1>
+    </>
   );
 }
