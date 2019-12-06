@@ -11,6 +11,7 @@ import MatriculationList from '../pages/MatriculationList';
 import HelpOrderList from '../pages/HelpOrderList';
 
 import StudentForm from '../pages/StudentForm';
+import PlanForm from '../pages/PlanForm';
 
 export default function Routes() {
   return (
@@ -29,6 +30,7 @@ export default function Routes() {
       <Route path="/helporders" component={HelpOrderList} isPrivate isList />
 
       <Route path="/studentregister" component={StudentForm} isPrivate />
+      <Route path="/planregister" component={PlanForm} isPrivate />
 
       <Route path="/" component={() => <h1>Error 404 - Not Found</h1>} />
     </Switch>

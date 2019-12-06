@@ -1,12 +1,19 @@
 import React from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import history from '../../services/history';
 
 export default function PlanList() {
+  function handleRegister() {
+    history.push('/planregister');
+  }
+
   return (
     <>
       <div>
         <h1>Gerenciando Planos</h1>
-        <button type="button">CADASTRAR</button>
+        <button type="button" onClick={handleRegister}>
+          CADASTRAR
+        </button>
       </div>
       <table>
         <thead>
