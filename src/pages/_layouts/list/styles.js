@@ -80,6 +80,10 @@ export const Content = styled.div`
       background: none;
       border: 0;
       padding: 6px;
+
+      &:hover {
+        color: ${darken(0.15, '#ee4d64')};
+      }
     }
   }
 `;
