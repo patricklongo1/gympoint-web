@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Wrapper = styled.div`
   min-height: 100%;
@@ -36,6 +37,11 @@ export const Content = styled.div`
       line-height: 16px;
       color: #ffffff;
       margin-right: 20px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.15, '#ee4d64')};
+      }
     }
 
     input {
