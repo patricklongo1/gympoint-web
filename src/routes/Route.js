@@ -19,7 +19,7 @@ export default function RouteWrapper({
     return <Redirect to="/" />;
   }
   if (signed && !isPrivate) {
-    return <Redirect to="/student" />;
+    return <Redirect to="/students" />;
   }
 
   let Layout = null;

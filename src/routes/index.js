@@ -6,6 +6,9 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SingUp';
 
 import StudentList from '../pages/StudentList';
+import PlanList from '../pages/PlanList';
+import MatriculationList from '../pages/MatriculationList';
+import HelpOrderList from '../pages/HelpOrderList';
 
 export default function Routes() {
   return (
@@ -13,7 +16,16 @@ export default function Routes() {
       <Route path="/" exact component={SignIn} />
       <Route path="/register" component={SignUp} />
 
-      <Route path="/student" component={StudentList} isPrivate isList />
+      <Route path="/students" component={StudentList} isPrivate isList />
+      <Route path="/plans" component={PlanList} isPrivate isList />
+      <Route
+        path="/matriculations"
+        component={MatriculationList}
+        isPrivate
+        isList
+      />
+      <Route path="/helporders" component={HelpOrderList} isPrivate isList />
+
       <Route path="/" component={() => <h1>Error 404 - Not Found</h1>} />
     </Switch>
   );

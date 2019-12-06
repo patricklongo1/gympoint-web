@@ -57,7 +57,8 @@ export const Content = styled.div`
   table {
     margin-top: 30px;
     background: #ffffff;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     border-radius: 4px;
 
     thead th {
