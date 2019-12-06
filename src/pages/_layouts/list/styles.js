@@ -67,6 +67,7 @@ export const Content = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: #444444;
+      text-align: center;
     }
 
     tbody td {
@@ -75,6 +76,7 @@ export const Content = styled.div`
       font-size: 16px;
       line-height: 20px;
       color: #666666;
+      text-align: center;
     }
 
     button {
