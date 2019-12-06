@@ -1,36 +1,46 @@
 module.exports = {
-  env: {
+
+env: {
     browser: true,
     es6: true,
   },
-  extends: [
+
+extends: [
     'airbnb',
     'prettier',
     'prettier/react',
   ],
-  globals: {
+
+globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: 'babel-eslint',
-  parserOptions: {
-    ecmaFeatures: {
+parser: 'babel-eslint',
+parserOptions: {
+
+	ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+
+        ecmaVersion: 2018,
     sourceType: 'module',
-  },
-  plugins: [
+
+},
+
+plugins: [
     'react',
     'prettier',
   ],
-  rules: {
-    'prettier/prettier': 'error',
-    'react/jsx-filename-extension': [
+
+rules: {
+
+	'prettier/prettier': 'error',
+
+	'react/jsx-filename-extension': [
       'warn',
       { extensions: ['.jsx', 'js'] }
     ],
-    'import/prefer-default-export': 'off',
-    'jsx-a11y/control-has-associated-label': 'off'
+    		'import/prefer-default-export': 'off'
   },
+
 };
