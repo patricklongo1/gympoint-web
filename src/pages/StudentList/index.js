@@ -1,12 +1,20 @@
 import React from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 
+import history from '../../services/history';
+
 export default function StudentList() {
+  function handleRegister() {
+    history.push('/studentregister');
+  }
+
   return (
     <>
       <div>
         <h1>Gerenciando Alunos</h1>
-        <button type="button">CADASTRAR</button>
+        <button type="button" onClick={handleRegister}>
+          CADASTRAR
+        </button>
         <input type="text" placeholder="   Buscar aluno" />
       </div>
       <table>

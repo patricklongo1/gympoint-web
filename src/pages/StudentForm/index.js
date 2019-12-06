@@ -1,13 +1,22 @@
 import React from 'react';
 import { Form, Input } from '@rocketseat/unform';
 
+import history from '../../services/history';
+
 export default function StudentForm() {
+  function handleBack() {
+    history.push('/students');
+  }
+
   return (
     <>
       <div>
         <h1>Cadastro de Aluno</h1>
-        <button type="button">VOLTAR</button>
-        <button type="button" form="std">
+        <button type="button" onClick={handleBack}>
+          VOLTAR
+        </button>
+
+        <button type="submit" form="std">
           SALVAR
         </button>
       </div>
