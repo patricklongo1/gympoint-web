@@ -64,7 +64,8 @@ export const Content = styled.div`
     }
 
     input {
-      width: 870px;
+      width: 100%;
+      max-width: 870px;
       height: 45px;
       padding: 10px;
       background: #ffffff;
@@ -87,6 +88,7 @@ export const Content = styled.div`
       div {
         display: flex;
         flex-direction: column;
+        margin: 5px 0;
 
         span {
           margin-left: 15px;

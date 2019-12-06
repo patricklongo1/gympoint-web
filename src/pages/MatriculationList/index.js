@@ -1,12 +1,20 @@
 import React from 'react';
 import { FaTrash, FaEdit, FaCheck, FaExclamation } from 'react-icons/fa';
 
+import history from '../../services/history';
+
 export default function MatriculationList() {
+  function handleRegister() {
+    history.push('/matriculationregister');
+  }
+
   return (
     <>
       <div>
         <h1>Gerenciando Matrículas</h1>
-        <button type="button">CADASTRAR</button>
+        <button type="button" onClick={handleRegister}>
+          CADASTRAR
+        </button>
       </div>
       <table>
         <thead>
