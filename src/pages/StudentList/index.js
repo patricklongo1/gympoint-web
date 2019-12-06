@@ -8,6 +8,10 @@ export default function StudentList() {
     history.push('/studentregister');
   }
 
+  function handleEdit() {
+    history.push('/studentedit');
+  }
+
   return (
     <>
       <div>
@@ -33,7 +37,7 @@ export default function StudentList() {
             <td>28</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -46,7 +50,7 @@ export default function StudentList() {
             <td>28</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -59,7 +63,7 @@ export default function StudentList() {
             <td>28</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -72,7 +76,7 @@ export default function StudentList() {
             <td>28</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />

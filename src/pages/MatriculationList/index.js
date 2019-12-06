@@ -8,6 +8,10 @@ export default function MatriculationList() {
     history.push('/matriculationregister');
   }
 
+  function handleEdit() {
+    history.push('/matriculationedit');
+  }
+
   return (
     <>
       <div>
@@ -38,7 +42,7 @@ export default function MatriculationList() {
             </td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -55,7 +59,7 @@ export default function MatriculationList() {
             </td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -72,7 +76,7 @@ export default function MatriculationList() {
             </td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -89,7 +93,7 @@ export default function MatriculationList() {
             </td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />

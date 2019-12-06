@@ -10,9 +10,13 @@ import PlanList from '../pages/PlanList';
 import MatriculationList from '../pages/MatriculationList';
 import HelpOrderList from '../pages/HelpOrderList';
 
-import StudentForm from '../pages/StudentForm';
-import PlanForm from '../pages/PlanForm';
-import MatriculationForm from '../pages/MatriculationForm';
+import StudentRegister from '../pages/StudentRegister';
+import PlanRegister from '../pages/PlanRegister';
+import MatriculationRegister from '../pages/MatriculationRegister';
+
+import StudentEdit from '../pages/StudentEdit';
+import PlanEdit from '../pages/PlanEdit';
+import MatriculationEdit from '../pages/MatriculationEdit';
 
 export default function Routes() {
   return (
@@ -30,11 +34,19 @@ export default function Routes() {
       />
       <Route path="/helporders" component={HelpOrderList} isPrivate isList />
 
-      <Route path="/studentregister" component={StudentForm} isPrivate />
-      <Route path="/planregister" component={PlanForm} isPrivate />
+      <Route path="/studentregister" component={StudentRegister} isPrivate />
+      <Route path="/planregister" component={PlanRegister} isPrivate />
       <Route
         path="/matriculationregister"
-        component={MatriculationForm}
+        component={MatriculationRegister}
+        isPrivate
+      />
+
+      <Route path="/studentedit" component={StudentEdit} isPrivate />
+      <Route path="/planedit" component={PlanEdit} isPrivate />
+      <Route
+        path="/matriculationedit"
+        component={MatriculationEdit}
         isPrivate
       />
 

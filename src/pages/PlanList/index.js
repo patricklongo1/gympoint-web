@@ -7,6 +7,10 @@ export default function PlanList() {
     history.push('/planregister');
   }
 
+  function handleEdit() {
+    history.push('/planedit');
+  }
+
   return (
     <>
       <div>
@@ -31,7 +35,7 @@ export default function PlanList() {
             <td>R$129,00</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -44,7 +48,7 @@ export default function PlanList() {
             <td>R$109,00</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
@@ -57,7 +61,7 @@ export default function PlanList() {
             <td>R$89,00</td>
             <td>
               <button type="button">
-                <FaEdit size={20} />
+                <FaEdit size={20} onClick={handleEdit} />
               </button>
               <button type="button">
                 <FaTrash size={20} />
