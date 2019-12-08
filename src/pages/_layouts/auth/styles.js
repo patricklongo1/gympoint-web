@@ -39,7 +39,7 @@ export const Content = styled.div`
     align-items: center;
     justify-content: center;
 
-    span {
+    small {
       align-self: flex-start;
       margin-left: 30px;
       font-style: normal;
@@ -57,6 +57,13 @@ export const Content = styled.div`
       background: #ffffff;
       border: 1px solid #dddddd;
       border-radius: 4px;
+    }
+
+    span {
+      margin-top: -17px;
+      font-weight: bold;
+      font-size: 12px;
+      color: red;
     }
 
     button {

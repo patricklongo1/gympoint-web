@@ -9,6 +9,8 @@ import AuthLayout from '../pages/_layouts/auth';
 import FormLayout from '../pages/_layouts/form';
 import ListLayout from '../pages/_layouts/list';
 
+import { store } from '../store';
+
 export default function RouteWrapper({
   component: Component,
   isPrivate,
@@ -45,7 +47,7 @@ export default function RouteWrapper({
     );
   }
 
-  const signed = true;
+  const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
