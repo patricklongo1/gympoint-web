@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 export const Button = styled.button`
   border: 0;
@@ -29,7 +30,10 @@ export const Container = styled.div`
   p {
     font-size: 18px;
     line-height: 26px;
-    color: #666666;
+    color: #444444;
+    margin: 5px auto 10px;
+    padding: 0 10px;
+    text-align: justify;
   }
 
   form {
@@ -62,4 +66,9 @@ export const Container = styled.div`
       }
     }
   }
+`;
+
+export const Scroll = styled(PerfectScrollbar)`
+  max-height: 200px;
+  padding: 5px 28px;
 `;
