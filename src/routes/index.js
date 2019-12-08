@@ -32,22 +32,29 @@ export default function Routes() {
         isPrivate
         isList
       />
-      <Route path="/helporders" component={HelpOrderList} isPrivate isList />
+      <Route path="/helporders" component={HelpOrderList} isPrivate />
 
-      <Route path="/studentregister" component={StudentRegister} isPrivate />
-      <Route path="/planregister" component={PlanRegister} isPrivate />
+      <Route
+        path="/studentregister"
+        component={StudentRegister}
+        isPrivate
+        isForm
+      />
+      <Route path="/planregister" component={PlanRegister} isPrivate isForm />
       <Route
         path="/matriculationregister"
         component={MatriculationRegister}
         isPrivate
+        isForm
       />
 
-      <Route path="/studentedit" component={StudentEdit} isPrivate />
-      <Route path="/planedit" component={PlanEdit} isPrivate />
+      <Route path="/studentedit" component={StudentEdit} isPrivate isForm />
+      <Route path="/planedit" component={PlanEdit} isPrivate isForm />
       <Route
         path="/matriculationedit"
         component={MatriculationEdit}
         isPrivate
+        isForm
       />
 
       <Route path="/" component={() => <h1>Error 404 - Not Found</h1>} />
