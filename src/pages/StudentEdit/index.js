@@ -1,11 +1,43 @@
-import React from 'react';
+/* eslint-disable no-shadow */
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
+import api from '../../services/api';
 
-export default function StudentEdit() {
+export default async function StudentEdit({ history: navigation }) {
+  const { id, name } = navigation.location.state;
+  const [editStudent, setEditStudent] = useState([]);
+
+  useEffect(() => {
+    async function findStudent() {
+      const response = await api.put(`students/${name}`);
+      const student = response.data;
+      setEditStudent(student);
+    }
+    findStudent();
+  }, [name]);
+
   function handleBack() {
     history.push('/students');
+  }
+
+  async function handleSubmit(data) {
+    try {
+      const { name, email, age, weight, height } = data;
+      await api.put(`students/${id}`, {
+        name,
+        email,
+        age,
+        weight,
+        height,
+      });
+      toast.success('top');
+    } catch (error) {
+      toast.error('Vish');
+    }
   }
 
   return (
@@ -20,7 +52,7 @@ export default function StudentEdit() {
           SALVAR
         </button>
       </div>
-      <Form id="std">
+      <Form initialData={editStudent} onSubmit={handleSubmit} id="std">
         <div>
           <span>NOME COMPLETO</span>
           <Input name="name" placeholder="Seu nome aqui" />
@@ -31,20 +63,24 @@ export default function StudentEdit() {
         <section>
           <div>
             <span>IDADE</span>
-            <Input name="idade" />
+            <Input name="age" />
           </div>
 
           <div>
             <span>PESO (em kg)</span>
-            <Input name="peso" />
+            <Input name="weight" />
           </div>
 
           <div>
             <span>ALTURA</span>
-            <Input name="altura" />
+            <Input name="height" />
           </div>
         </section>
       </Form>
     </>
   );
 }
+
+StudentEdit.propTypes = {
+  history: PropTypes.element.isRequired,
+};

@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import history from '../../services/history';
 import api from '../../services/api';
 
 export default function StudentList() {
-  api.get('students');
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    async function loadStudents() {
+      const response = await api.get('students');
+      setStudents(response.data);
+    }
+    loadStudents();
+  }, [students]);
 
   function handleRegister() {
     history.push('/studentregister');
   }
 
-  function handleEdit() {
-    history.push('/studentedit');
+  function handleEdit(id, name) {
+    history.push(`/studentedit/${id}`, { id, name });
+  }
+
+  async function handleDelete(id) {
+    await api.delete(`students/${id}`);
   }
 
   return (
@@ -34,58 +46,24 @@ export default function StudentList() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>emaildocaboclo@hotmail.com</td>
-            <td>28</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>emaildocaboclo@hotmail.com</td>
-            <td>28</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>emaildocaboclo@hotmail.com</td>
-            <td>28</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>emaildocaboclo@hotmail.com</td>
-            <td>28</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
+          {students.map(student => (
+            <tr>
+              <td>{student.name}</td>
+              <td>{student.email}</td>
+              <td>{student.age}</td>
+              <td>
+                <button type="button">
+                  <FaEdit
+                    size={20}
+                    onClick={() => handleEdit(student.id, student.name)}
+                  />
+                </button>
+                <button type="button">
+                  <FaTrash size={20} onClick={() => handleDelete(student.id)} />
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
