@@ -7,11 +7,11 @@ import logo from '../../assets/logo.svg';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('E-mail inválido')
-    .required('Insíra um E-Mail'),
+    .required('Insira um E-Mail'),
   name: Yup.string().required('Insíra seu nome'),
   password: Yup.string()
     .min(6, 'No mínimo 6 digitos')
-    .required('Insíra uma Senha'),
+    .required('Insira uma Senha'),
   passwordConfirm: Yup.string().required('Confirme sua senha'),
 });
 

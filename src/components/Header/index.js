@@ -1,10 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Container, Logo, Nav, User } from './styles';
 import logo from '../../assets/logo.svg';
 
 import history from '../../services/history';
 
+import { signOut } from '../../store/modules/auth/actions';
+
 export default function Header() {
+  const dispatch = useDispatch();
+
+  function handleLogOut() {
+    dispatch(signOut());
+  }
+
   function handleNavigation(button) {
     if (button === 'planos') {
       history.push('/plans');
@@ -41,7 +50,9 @@ export default function Header() {
 
       <User>
         <span>ADMNISTRADOR</span>
-        <button type="button">sair do sistema</button>
+        <button type="button" onClick={handleLogOut}>
+          sair do sistema
+        </button>
       </User>
     </Container>
   );
