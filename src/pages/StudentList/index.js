@@ -2,8 +2,11 @@ import React from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import history from '../../services/history';
+import api from '../../services/api';
 
 export default function StudentList() {
+  api.get('students');
+
   function handleRegister() {
     history.push('/studentregister');
   }
