@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
-import StudentForm from '../../components/StudentForm';
 
 export default function StudentEdit() {
   function handleBack() {
@@ -20,7 +20,31 @@ export default function StudentEdit() {
           SALVAR
         </button>
       </div>
-      <StudentForm id="std" />
+      <Form id="std">
+        <div>
+          <span>NOME COMPLETO</span>
+          <Input name="name" placeholder="Seu nome aqui" />
+
+          <span>ENDEREÇO DE E-MAIL</span>
+          <Input name="email" type="email" placeholder="exemplo@email.com" />
+        </div>
+        <section>
+          <div>
+            <span>IDADE</span>
+            <Input name="idade" />
+          </div>
+
+          <div>
+            <span>PESO (em kg)</span>
+            <Input name="peso" />
+          </div>
+
+          <div>
+            <span>ALTURA</span>
+            <Input name="altura" />
+          </div>
+        </section>
+      </Form>
     </>
   );
 }

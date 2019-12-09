@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
-import PlanForm from '../../components/PlanForm';
 
 export default function PlanRegister() {
   function handleBack() {
@@ -20,7 +20,28 @@ export default function PlanRegister() {
           SALVAR
         </button>
       </div>
-      <PlanForm id="plan" />
+      <Form id="plan">
+        <div>
+          <span>TÍTULO DO PLANO</span>
+          <Input name="plan" placeholder="Nome do plano aqui" />
+        </div>
+        <section>
+          <div>
+            <span>DURAÇÃO (em meses)</span>
+            <Input name="duracao" />
+          </div>
+
+          <div>
+            <span>PREÇO MENSAL</span>
+            <Input name="precoMensal" />
+          </div>
+
+          <div>
+            <span>PREÇO TOTAL</span>
+            <Input name="precoTotal" />
+          </div>
+        </section>
+      </Form>
     </>
   );
 }
