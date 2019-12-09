@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 
@@ -6,12 +6,18 @@ import history from '../../services/history';
 import api from '../../services/api';
 
 export default function StudentRegister() {
+  const [loading, setLoading] = useState(false);
+
   function handleBack() {
     history.push('/students');
   }
 
-  async function handleSubmit({ name, email, age, weight, height }) {
+  async function handleSubmit(
+    { name, email, age, weight, height },
+    { resetForm }
+  ) {
     try {
+      setLoading(true);
       await api.post('students', {
         name,
         email,
@@ -21,8 +27,11 @@ export default function StudentRegister() {
       });
 
       toast.success('Aluno cadastrado com sucesso');
+      setLoading(false);
+      resetForm();
     } catch (error) {
       toast.error('Falha ao adicionar aluno, verifique os dados');
+      setLoading(false);
     }
   }
 
@@ -34,7 +43,7 @@ export default function StudentRegister() {
           VOLTAR
         </button>
         <button type="submit" form="std">
-          SALVAR
+          {!loading ? 'SALVAR' : 'CARREGANDO...'}
         </button>
       </div>
       <Form id="std" onSubmit={handleSubmit}>
