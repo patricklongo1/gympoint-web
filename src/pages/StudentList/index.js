@@ -47,7 +47,7 @@ export default function StudentList() {
         </thead>
         <tbody>
           {students.map(student => (
-            <tr>
+            <tr key={student.id}>
               <td>{student.name}</td>
               <td>{student.email}</td>
               <td>{student.age}</td>

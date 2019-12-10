@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
@@ -7,13 +8,13 @@ import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
 import api from '../../services/api';
 
-export default async function StudentEdit({ history: navigation }) {
+export default function StudentEdit({ history: navigation }) {
   const { id, name } = navigation.location.state;
   const [editStudent, setEditStudent] = useState([]);
 
   useEffect(() => {
     async function findStudent() {
-      const response = await api.put(`students/${name}`);
+      const response = await api.get(`students/${name}`);
       const student = response.data;
       setEditStudent(student);
     }
@@ -39,6 +40,8 @@ export default async function StudentEdit({ history: navigation }) {
       toast.error('Vish');
     }
   }
+
+  console.tron.log(editStudent);
 
   return (
     <>
@@ -82,5 +85,5 @@ export default async function StudentEdit({ history: navigation }) {
 }
 
 StudentEdit.propTypes = {
-  history: PropTypes.element.isRequired,
+  history: PropTypes.object.isRequired,
 };
