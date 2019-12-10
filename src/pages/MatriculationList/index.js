@@ -1,15 +1,46 @@
-import React from 'react';
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
+import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaCheck, FaExclamation } from 'react-icons/fa';
 
 import history from '../../services/history';
+import api from '../../services/api';
 
 export default function MatriculationList() {
+  const [matriculations, setMatriculations] = useState([]);
+  const [deletes, setDeletes] = useState([]);
+
+  useEffect(() => {
+    async function loadMatriculations() {
+      const response = await api.get('matriculations');
+      setMatriculations(response.data);
+    }
+    loadMatriculations();
+  }, []);
+
+  useEffect(() => {
+    async function reloadStudents() {
+      const response = await api.get('matriculations');
+      setMatriculations(response.data);
+    }
+    reloadStudents();
+  }, [deletes]);
+
   function handleRegister() {
     history.push('/matriculationregister');
   }
 
-  function handleEdit() {
-    history.push('/matriculationedit');
+  function handleEdit(id, matriculation) {
+    history.push(`/matriculationedit/${id}`, { matriculation });
+  }
+
+  async function handleDelete(id) {
+    const conf = confirm('Deseja realmente deletar esta matricula do sistema?');
+
+    if (conf) {
+      await api.delete(`matriculations/${id}`);
+      setDeletes([...deletes, '1']);
+    }
   }
 
   return (
@@ -32,74 +63,35 @@ export default function MatriculationList() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>Start</td>
-            <td>30 de Abril de 2019</td>
-            <td>30 de Maio de 2019</td>
-            <td>
-              <FaExclamation size={20} />
-            </td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>Gold</td>
-            <td>30 de Abril de 2019</td>
-            <td>30 de Julho de 2019</td>
-            <td>
-              <FaExclamation size={20} />
-            </td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>Diamond</td>
-            <td>30 de Julho de 2019</td>
-            <td>30 de Janeiro de 2020</td>
-            <td>
-              <FaCheck size={20} />
-            </td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nome do caboclo</td>
-            <td>Diamond</td>
-            <td>30 de Janeiro de 2020</td>
-            <td>30 de Julho de 2020</td>
-            <td>
-              <FaExclamation size={20} />
-            </td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
+          {matriculations.map(matriculation => (
+            <tr>
+              <td>{matriculation.student_id}</td>
+              <td>{matriculation.plan_id}</td>
+              <td>{matriculation.start_date}</td>
+              <td>{matriculation.end_date}</td>
+              <td>
+                {matriculation.active ? (
+                  <FaCheck size={20} />
+                ) : (
+                  <FaExclamation size={20} />
+                )}
+              </td>
+              <td>
+                <button type="button">
+                  <FaEdit
+                    size={20}
+                    onClick={() => handleEdit(matriculation.id, matriculation)}
+                  />
+                </button>
+                <button type="button">
+                  <FaTrash
+                    size={20}
+                    onClick={() => handleDelete(matriculation.id)}
+                  />
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>

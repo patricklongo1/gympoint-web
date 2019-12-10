@@ -8,6 +8,7 @@ import api from '../../services/api';
 
 export default function StudentList() {
   const [students, setStudents] = useState([]);
+  const [deletes, setDeletes] = useState([]);
 
   useEffect(() => {
     async function loadStudents() {
@@ -15,7 +16,15 @@ export default function StudentList() {
       setStudents(response.data);
     }
     loadStudents();
-  }, [students]);
+  }, []);
+
+  useEffect(() => {
+    async function reloadStudents() {
+      const response = await api.get('students');
+      setStudents(response.data);
+    }
+    reloadStudents();
+  }, [deletes]);
 
   function handleRegister() {
     history.push('/studentregister');
@@ -30,6 +39,7 @@ export default function StudentList() {
 
     if (conf) {
       await api.delete(`students/${id}`);
+      setDeletes([...deletes, '1']);
     }
   }
 
@@ -40,7 +50,7 @@ export default function StudentList() {
         <button type="button" onClick={handleRegister}>
           CADASTRAR
         </button>
-        <input type="text" placeholder="   Buscar aluno" />
+        <input type="text" placeholder="Buscar aluno" />
       </div>
       <table>
         <thead>

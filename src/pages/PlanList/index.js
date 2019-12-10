@@ -8,6 +8,7 @@ import api from '../../services/api';
 
 export default function PlanList() {
   const [plans, setPlans] = useState([]);
+  const [deletes, setDeletes] = useState([]);
 
   useEffect(() => {
     async function loadPlans() {
@@ -15,7 +16,15 @@ export default function PlanList() {
       setPlans(response.data);
     }
     loadPlans();
-  }, [plans]);
+  }, []);
+
+  useEffect(() => {
+    async function reloadStudents() {
+      const response = await api.get('plans');
+      setPlans(response.data);
+    }
+    reloadStudents();
+  }, [deletes]);
 
   function handleRegister() {
     history.push('/planregister');
@@ -30,6 +39,7 @@ export default function PlanList() {
 
     if (conf) {
       await api.delete(`plans/${id}`);
+      setDeletes([...deletes, '1']);
     }
   }
 
