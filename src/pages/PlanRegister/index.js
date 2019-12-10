@@ -1,11 +1,33 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
+
 import history from '../../services/history';
+import api from '../../services/api';
 
 export default function PlanRegister() {
+  const [loading, setLoading] = useState(false);
+
   function handleBack() {
     history.push('/plans');
+  }
+
+  async function handleSubmit({ title, duration, price }, { resetForm }) {
+    try {
+      setLoading(true);
+      await api.post('plans', {
+        title,
+        duration,
+        price,
+      });
+
+      toast.success('Plano cadastrado com sucesso');
+      setLoading(false);
+      resetForm();
+    } catch (error) {
+      toast.error('Falha ao adicionar plano, verifique os dados');
+      setLoading(false);
+    }
   }
 
   return (
@@ -17,28 +39,28 @@ export default function PlanRegister() {
         </button>
 
         <button type="submit" form="plan">
-          SALVAR
+          {!loading ? 'SALVAR' : 'CARREGANDO...'}
         </button>
       </div>
-      <Form id="plan">
+      <Form id="plan" onSubmit={handleSubmit}>
         <div>
           <span>TÍTULO DO PLANO</span>
-          <Input name="plan" placeholder="Nome do plano aqui" />
+          <Input name="title" placeholder="Nome do plano aqui" />
         </div>
         <section>
           <div>
             <span>DURAÇÃO (em meses)</span>
-            <Input name="duracao" />
+            <Input name="duration" />
           </div>
 
           <div>
             <span>PREÇO MENSAL</span>
-            <Input name="precoMensal" />
+            <Input name="price" />
           </div>
 
           <div>
             <span>PREÇO TOTAL</span>
-            <Input name="precoTotal" />
+            <Input name="totalPrice" />
           </div>
         </section>
       </Form>

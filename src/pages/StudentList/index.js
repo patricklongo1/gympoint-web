@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 
@@ -19,12 +21,16 @@ export default function StudentList() {
     history.push('/studentregister');
   }
 
-  function handleEdit(id, name) {
-    history.push(`/studentedit/${id}`, { id, name });
+  function handleEdit(id, student) {
+    history.push(`/studentedit/${id}`, { student });
   }
 
   async function handleDelete(id) {
-    await api.delete(`students/${id}`);
+    const conf = confirm('Deseja realmente deletar este aluno do sistema?');
+
+    if (conf) {
+      await api.delete(`students/${id}`);
+    }
   }
 
   return (
@@ -55,7 +61,7 @@ export default function StudentList() {
                 <button type="button">
                   <FaEdit
                     size={20}
-                    onClick={() => handleEdit(student.id, student.name)}
+                    onClick={() => handleEdit(student.id, student)}
                   />
                 </button>
                 <button type="button">

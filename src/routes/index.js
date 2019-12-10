@@ -49,9 +49,9 @@ export default function Routes() {
       />
 
       <Route path="/studentedit/:id" component={StudentEdit} isPrivate isForm />
-      <Route path="/planedit" component={PlanEdit} isPrivate isForm />
+      <Route path="/planedit/:id" component={PlanEdit} isPrivate isForm />
       <Route
-        path="/matriculationedit"
+        path="/matriculationedit/:id"
         component={MatriculationEdit}
         isPrivate
         isForm

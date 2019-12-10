@@ -1,14 +1,36 @@
-import React from 'react';
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
+import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+
 import history from '../../services/history';
+import api from '../../services/api';
 
 export default function PlanList() {
+  const [plans, setPlans] = useState([]);
+
+  useEffect(() => {
+    async function loadPlans() {
+      const response = await api.get('plans');
+      setPlans(response.data);
+    }
+    loadPlans();
+  }, [plans]);
+
   function handleRegister() {
     history.push('/planregister');
   }
 
-  function handleEdit() {
-    history.push('/planedit');
+  function handleEdit(id, plan) {
+    history.push(`/planedit/${id}`, { plan });
+  }
+
+  async function handleDelete(id) {
+    const conf = confirm('Deseja realmente deletar este plano do sistema?');
+
+    if (conf) {
+      await api.delete(`plans/${id}`);
+    }
   }
 
   return (
@@ -29,45 +51,21 @@ export default function PlanList() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Start</td>
-            <td>1 mês</td>
-            <td>R$129,00</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Gold</td>
-            <td>3 meses</td>
-            <td>R$109,00</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Diamond</td>
-            <td>6 meses</td>
-            <td>R$89,00</td>
-            <td>
-              <button type="button">
-                <FaEdit size={20} onClick={handleEdit} />
-              </button>
-              <button type="button">
-                <FaTrash size={20} />
-              </button>
-            </td>
-          </tr>
+          {plans.map(plan => (
+            <tr key={plan.id}>
+              <td>{plan.title}</td>
+              <td>{plan.duration}</td>
+              <td>{plan.price}</td>
+              <td>
+                <button type="button">
+                  <FaEdit size={20} onClick={() => handleEdit(plan.id, plan)} />
+                </button>
+                <button type="button">
+                  <FaTrash size={20} onClick={() => handleDelete(plan.id)} />
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
