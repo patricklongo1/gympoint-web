@@ -75,7 +75,6 @@ export const Content = styled.div`
       padding: 12px;
       border-top: 1px solid #eee;
       font-size: 16px;
-      line-height: 20px;
       color: #666666;
       text-align: center;
     }

@@ -38,7 +38,7 @@ export const Content = styled.div`
 
     tbody td {
       padding: 12px;
-      border-bottom: 1px solid #eee;
+      border-top: 1px solid #eee;
       font-size: 16px;
       line-height: 20px;
       color: #666666;
