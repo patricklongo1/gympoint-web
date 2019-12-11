@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
-import { FaTrash, FaEdit, FaSearch } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -13,19 +13,11 @@ export default function StudentList() {
 
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get('students');
+      const response = await api.get(`students/${input}`);
       setStudents(response.data);
     }
     loadStudents();
-  }, []);
-
-  useEffect(() => {
-    async function reloadStudents() {
-      const response = await api.get('students');
-      setStudents(response.data);
-    }
-    reloadStudents();
-  }, [deletes]);
+  }, [input, deletes]);
 
   function handleRegister() {
     history.push('/studentregister');
@@ -48,12 +40,6 @@ export default function StudentList() {
     setInput(e.target.value);
   }
 
-  async function handleFind() {
-    const response = await api.get(`students/${input}`);
-    setStudents(response.data);
-    setInput('');
-  }
-
   return (
     <>
       <div>
@@ -61,15 +47,14 @@ export default function StudentList() {
         <button type="button" onClick={handleRegister}>
           CADASTRAR
         </button>
-        <input
-          value={input}
-          onChange={() => handleInput(event)}
-          type="text"
-          placeholder="Buscar aluno"
-        />
-        <button type="button" className="findB">
-          <FaSearch onClick={handleFind} />
-        </button>
+        <form>
+          <input
+            value={input}
+            onChange={() => handleInput(event)}
+            type="text"
+            placeholder="Buscar aluno"
+          />
+        </form>
       </div>
       <table>
         <thead>

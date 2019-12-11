@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import Popup from '../../components/Popup';
+import RenderPopUp from '../../components/RenderPopUp';
 import { Wrapper, Content } from './styles';
+import api from '../../services/api';
 
 export default function HelpOrderList() {
+  const [helpOrders, setHelpOrders] = useState([]);
+  const [answered, setAnswered] = useState([]);
+
+  useEffect(() => {
+    async function loadHelpOrders() {
+      const response = await api.get('help_orders');
+      setHelpOrders(response.data);
+    }
+    loadHelpOrders();
+  }, [answered]);
+
+  async function dispose() {
+    setAnswered([...answered, '+1']);
+  }
+
   return (
     <Wrapper>
       <Content>
@@ -19,30 +35,24 @@ export default function HelpOrderList() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Nome do caboclo</td>
-                <td>
-                  <Popup />
-                </td>
-              </tr>
-              <tr>
-                <td>Nome do caboclo</td>
-                <td>
-                  <Popup />
-                </td>
-              </tr>
-              <tr>
-                <td>Nome do caboclo</td>
-                <td>
-                  <Popup />
-                </td>
-              </tr>
-              <tr>
-                <td>Nome do caboclo</td>
-                <td>
-                  <Popup />
-                </td>
-              </tr>
+              {helpOrders.length >= 0 ? (
+                helpOrders.map(order => (
+                  <tr>
+                    <td>{order.student.name}</td>
+                    <td>
+                      <RenderPopUp
+                        dispose={dispose}
+                        question={order.question}
+                        orderID={order.id}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td>Não consta alunos na listagem</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </>

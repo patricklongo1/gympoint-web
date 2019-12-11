@@ -53,16 +53,6 @@ export const Content = styled.div`
       border-radius: 4px;
       padding: 10px;
     }
-
-    button.findB {
-      background: none;
-      width: 45px;
-      height: 45px;
-
-      svg {
-        color: #000;
-      }
-    }
   }
 
   table {
@@ -83,7 +73,7 @@ export const Content = styled.div`
 
     tbody td {
       padding: 12px;
-      border-bottom: 1px solid #eee;
+      border-top: 1px solid #eee;
       font-size: 16px;
       line-height: 20px;
       color: #666666;

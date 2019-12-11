@@ -20,7 +20,7 @@ export const Container = styled.div`
   flex-direction: column;
   text-align: left;
 
-  span {
+  small {
     margin: 15px 0 10px;
     font-weight: bold;
     font-size: 20px;
@@ -64,6 +64,12 @@ export const Container = styled.div`
       &:hover {
         background: ${darken(0.15, '#ee4d64')};
       }
+    }
+
+    span {
+      align-self: center;
+      color: red;
+      margin-top: 5px;
     }
   }
 `;
