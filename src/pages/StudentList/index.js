@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import { FaTrash, FaEdit, FaSearch } from 'react-icons/fa';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -9,6 +9,7 @@ import api from '../../services/api';
 export default function StudentList() {
   const [students, setStudents] = useState([]);
   const [deletes, setDeletes] = useState([]);
+  const [input, setInput] = useState('');
 
   useEffect(() => {
     async function loadStudents() {
@@ -43,6 +44,16 @@ export default function StudentList() {
     }
   }
 
+  function handleInput(e) {
+    setInput(e.target.value);
+  }
+
+  async function handleFind() {
+    const response = await api.get(`students/${input}`);
+    setStudents(response.data);
+    setInput('');
+  }
+
   return (
     <>
       <div>
@@ -50,7 +61,15 @@ export default function StudentList() {
         <button type="button" onClick={handleRegister}>
           CADASTRAR
         </button>
-        <input type="text" placeholder="Buscar aluno" />
+        <input
+          value={input}
+          onChange={() => handleInput(event)}
+          type="text"
+          placeholder="Buscar aluno"
+        />
+        <button type="button" className="findB">
+          <FaSearch onClick={handleFind} />
+        </button>
       </div>
       <table>
         <thead>
@@ -62,24 +81,33 @@ export default function StudentList() {
           </tr>
         </thead>
         <tbody>
-          {students.map(student => (
-            <tr key={student.id}>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.age}</td>
-              <td>
-                <button type="button">
-                  <FaEdit
-                    size={20}
-                    onClick={() => handleEdit(student.id, student)}
-                  />
-                </button>
-                <button type="button">
-                  <FaTrash size={20} onClick={() => handleDelete(student.id)} />
-                </button>
-              </td>
+          {students.length >= 0 ? (
+            students.map(student => (
+              <tr key={student.id}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.age}</td>
+                <td>
+                  <button type="button">
+                    <FaEdit
+                      size={20}
+                      onClick={() => handleEdit(student.id, student)}
+                    />
+                  </button>
+                  <button type="button">
+                    <FaTrash
+                      size={20}
+                      onClick={() => handleDelete(student.id)}
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td>Não consta alunos na listagem</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </>

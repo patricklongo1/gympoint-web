@@ -15,6 +15,7 @@ export const Content = styled.div`
   div {
     width: 100%;
     display: flex;
+    align-items: center;
 
     h1 {
       flex: 1;
@@ -51,6 +52,16 @@ export const Content = styled.div`
       border: 1px solid #dddddd;
       border-radius: 4px;
       padding: 10px;
+    }
+
+    button.findB {
+      background: none;
+      width: 45px;
+      height: 45px;
+
+      svg {
+        color: #000;
+      }
     }
   }
 

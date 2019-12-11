@@ -102,8 +102,16 @@ export default function MatriculationList() {
         <tbody>
           {matriculations.map(matriculation => (
             <tr>
-              <td>{matriculation.student.name}</td>
-              <td>{matriculation.plan.title}</td>
+              <td>
+                {matriculation.student !== null
+                  ? matriculation.student.name
+                  : '***Aluno deletado***'}
+              </td>
+              <td>
+                {matriculation.plan !== null
+                  ? matriculation.plan.title
+                  : '***plano deletado***'}
+              </td>
               <td>{matriculation.start_formatedDate}</td>
               <td>{matriculation.end_formatedDate}</td>
               <td>
