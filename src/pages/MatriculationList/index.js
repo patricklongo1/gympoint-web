@@ -2,6 +2,8 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaCheck, FaExclamation } from 'react-icons/fa';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -13,7 +15,25 @@ export default function MatriculationList() {
   useEffect(() => {
     async function loadMatriculations() {
       const response = await api.get('matriculations');
-      setMatriculations(response.data);
+
+      const mats = response.data.map(matriculation => ({
+        ...matriculation,
+        start_formatedDate: format(
+          parseISO(matriculation.start_date),
+          "d 'de' MMMM 'de' y",
+          {
+            locale: pt,
+          }
+        ),
+        end_formatedDate: format(
+          parseISO(matriculation.end_date),
+          "d 'de' MMMM 'de' y",
+          {
+            locale: pt,
+          }
+        ),
+      }));
+      setMatriculations(mats);
     }
     loadMatriculations();
   }, []);
@@ -21,7 +41,24 @@ export default function MatriculationList() {
   useEffect(() => {
     async function reloadStudents() {
       const response = await api.get('matriculations');
-      setMatriculations(response.data);
+      const mats = response.data.map(matriculation => ({
+        ...matriculation,
+        start_formatedDate: format(
+          parseISO(matriculation.start_date),
+          "d 'de' MMMM 'de' y",
+          {
+            locale: pt,
+          }
+        ),
+        end_formatedDate: format(
+          parseISO(matriculation.end_date),
+          "d 'de' MMMM 'de' y",
+          {
+            locale: pt,
+          }
+        ),
+      }));
+      setMatriculations(mats);
     }
     reloadStudents();
   }, [deletes]);
@@ -65,10 +102,10 @@ export default function MatriculationList() {
         <tbody>
           {matriculations.map(matriculation => (
             <tr>
-              <td>{matriculation.student_id}</td>
-              <td>{matriculation.plan_id}</td>
-              <td>{matriculation.start_date}</td>
-              <td>{matriculation.end_date}</td>
+              <td>{matriculation.student.name}</td>
+              <td>{matriculation.plan.title}</td>
+              <td>{matriculation.start_formatedDate}</td>
+              <td>{matriculation.end_formatedDate}</td>
               <td>
                 {matriculation.active ? (
                   <FaCheck size={20} />
