@@ -103,12 +103,13 @@ export default function MatriculationList() {
           {matriculations.map(matriculation => (
             <tr>
               <td>
-                {matriculation.student !== null
+                {matriculation.student !== null &&
+                matriculation.student !== undefined
                   ? matriculation.student.name
                   : '***Aluno deletado***'}
               </td>
               <td>
-                {matriculation.plan !== null
+                {matriculation.plan !== null && matriculation.plan !== undefined
                   ? matriculation.plan.title
                   : '***plano deletado***'}
               </td>

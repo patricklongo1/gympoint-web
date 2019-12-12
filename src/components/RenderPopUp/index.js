@@ -12,6 +12,7 @@ import api from '../../services/api';
 
 export default function RenderPopUp({ question, orderID, dispose }) {
   const [answer, setAnswer] = useState('');
+  const [answered, setAnswered] = useState(false);
 
   async function handleSubmit() {
     try {
@@ -19,6 +20,8 @@ export default function RenderPopUp({ question, orderID, dispose }) {
         answer,
       });
       toast.success('Resposta enviada com sucesso!');
+      setAnswer('');
+      setAnswered(true);
     } catch (error) {
       toast.success('Falha ao enviar resposta');
     }
@@ -54,8 +57,11 @@ export default function RenderPopUp({ question, orderID, dispose }) {
             placeholder="Sua resposta aqui"
             value={answer}
             onChange={() => handleInput(event)}
+            readOnly={answered}
           />
-          <button type="submit">Responder aluno</button>
+          <button type="submit" disabled={answered}>
+            Responder aluno
+          </button>
         </Form>
       </Container>
     </Popup>

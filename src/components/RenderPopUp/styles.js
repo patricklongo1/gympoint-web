@@ -47,6 +47,10 @@ export const Container = styled.div`
       border-radius: 4px;
       font-size: 18px;
       padding: 15px;
+
+      &:read-only {
+        background: #999;
+      }
     }
 
     button {
@@ -63,6 +67,10 @@ export const Container = styled.div`
 
       &:hover {
         background: ${darken(0.15, '#ee4d64')};
+      }
+
+      &:disabled {
+        background: #999;
       }
     }
 
