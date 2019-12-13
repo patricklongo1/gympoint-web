@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import AsyncSelect from 'react-select/async';
+import DatePicker from 'react-datepicker';
 
 export const CustomAsyncSelect = styled(AsyncSelect)`
   margin-top: 10px;
@@ -38,4 +39,8 @@ export const CustomSelect = styled(AsyncSelect)`
       margin-bottom: 10px;
     }
   }
+`;
+
+export const CustomDatePicker = styled(DatePicker)`
+  width: 100%;
 `;

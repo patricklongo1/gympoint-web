@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import history from '../../services/history';
 import api from '../../services/api';
-import { CustomAsyncSelect, CustomSelect } from './styles';
+import { CustomAsyncSelect, CustomSelect, CustomDatePicker } from './styles';
 
 export default function MatriculationRegister() {
   const [student, setStudent] = useState('');
@@ -117,7 +117,13 @@ export default function MatriculationRegister() {
         <section>
           <div>
             <span>DATA DE INÍCIO</span>
-            <Input name="dataInicio" onChange={date => setStartDate(date)} />
+            <CustomDatePicker
+              selected={startDate}
+              onChange={date => setStartDate(date)}
+              minDate={new Date()}
+              dateFormat="dd/MM/yyyy"
+              placeholderText="01/01/2020"
+            />
           </div>
 
           <div>
