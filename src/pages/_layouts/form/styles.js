@@ -81,7 +81,7 @@ export const Content = styled.div`
       margin: 15px auto;
     }
 
-    section {
+    > section {
       display: flex;
       flex-direction: row;
 
@@ -98,6 +98,11 @@ export const Content = styled.div`
           width: 100%;
           max-width: 270px;
           margin: 0 auto;
+
+          &:read-only {
+            background: #999;
+            color: #fff;
+          }
         }
       }
     }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-restricted-globals */
+import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 
@@ -7,19 +8,22 @@ import api from '../../services/api';
 
 export default function PlanRegister() {
   const [loading, setLoading] = useState(false);
+  const [durationT = 2, setDurationT] = useState('');
+  const [priceMonth = 2, setPriceMonth] = useState('');
+  const [priceTotal, setPriceTotal] = useState('');
+
+  useEffect(() => {
+    setPriceTotal(`R$${durationT * priceMonth},00`);
+  }, [durationT, priceMonth]);
 
   function handleBack() {
     history.push('/plans');
   }
 
-  async function handleSubmit({ title, duration, price }, { resetForm }) {
+  async function handleSubmit(data, { resetForm }) {
     try {
       setLoading(true);
-      await api.post('plans', {
-        title,
-        duration,
-        price,
-      });
+      await api.post('plans', data);
 
       toast.success('Plano cadastrado com sucesso');
       setLoading(false);
@@ -50,17 +54,25 @@ export default function PlanRegister() {
         <section>
           <div>
             <span>DURAÇÃO (em meses)</span>
-            <Input name="duration" />
+            <Input
+              name="duration"
+              value={durationT}
+              onChange={e => setDurationT(e.target.value)}
+            />
           </div>
 
           <div>
             <span>PREÇO MENSAL</span>
-            <Input name="price" />
+            <Input
+              name="price"
+              value={priceMonth}
+              onChange={e => setPriceMonth(e.target.value)}
+            />
           </div>
 
           <div>
             <span>PREÇO TOTAL</span>
-            <Input name="totalPrice" />
+            <Input name="totalPrice" readOnly value={priceTotal} />
           </div>
         </section>
       </Form>
