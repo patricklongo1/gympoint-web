@@ -5,7 +5,15 @@ import { toast } from 'react-toastify';
 
 import history from '../../services/history';
 import api from '../../services/api';
-import { CustomAsyncSelect, CustomSelect, CustomDatePicker } from './styles';
+import {
+  Wrapper,
+  Content,
+  Top,
+  ContentForm,
+  CustomAsyncSelect,
+  CustomSelect,
+  CustomDatePicker,
+} from './styles';
 
 export default function MatriculationRegister() {
   const [student, setStudent] = useState('');
@@ -19,14 +27,14 @@ export default function MatriculationRegister() {
 
   async function handleSubmit() {
     try {
-      await api.post('/enrollments', {
+      await api.post('/matriculations', {
         student_id: student.id,
         plan_id: plan.value,
         start_date: startDate,
       });
 
       toast.success('Matrícula realizada com sucesso');
-      history.push('/enrollments');
+      history.push('/matriculations');
     } catch (error) {
       toast.error('Erro ao tentar realizar a matrícula');
     }
@@ -77,66 +85,80 @@ export default function MatriculationRegister() {
   }
 
   return (
-    <>
-      <div>
-        <h1>Cadastro de Matrícula</h1>
-        <button type="button" onClick={handleBack}>
-          VOLTAR
-        </button>
+    <Wrapper>
+      <Content>
+        <Top>
+          <h1>Cadastro de Matrícula</h1>
+          <button type="button" onClick={handleBack}>
+            VOLTAR
+          </button>
 
-        <button type="submit" form="mtc">
-          SALVAR
-        </button>
-      </div>
-      <Form id="mtc" onSubmit={handleSubmit}>
-        <div>
-          <span>ALUNO</span>
-          <CustomAsyncSelect
-            cacheOptions
-            isClearable
-            defaultOptions
-            loadOptions={e => loadStudents(e)}
-            value={student}
-            onChange={e => setStudent(e)}
-            placeholder="Selecionar aluno"
-          />
-          <div>
-            <span>PLANO</span>
-            <CustomSelect
-              name="plan_id"
-              isSearchable={false}
-              isClearable
-              defaultOptions
-              loadOptions={e => loadPlans(e)}
-              value={plan}
-              onChange={e => handlePlanChange(e)}
-              placeholder="Selecionar plano"
-            />
-          </div>
-        </div>
-        <section>
-          <div>
-            <span>DATA DE INÍCIO</span>
-            <CustomDatePicker
-              selected={startDate}
-              onChange={date => setStartDate(date)}
-              minDate={new Date()}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="01/01/2020"
-            />
-          </div>
-
-          <div>
-            <span>DATA DE TÉRMINO</span>
-            <Input name="dataTermino" disable value={endDate} />
-          </div>
-
-          <div>
-            <span>VALOR FINAL</span>
-            <Input name="valorFinal" disable value={totalPrice} />
-          </div>
-        </section>
-      </Form>
-    </>
+          <button type="submit" form="mtc">
+            SALVAR
+          </button>
+        </Top>
+        <ContentForm>
+          <Form id="mtc" onSubmit={handleSubmit} className="form">
+            <div className="aluno">
+              <span className="form">ALUNO</span>
+              <CustomAsyncSelect
+                cacheOptions
+                isClearable
+                defaultOptions
+                loadOptions={e => loadStudents(e)}
+                value={student}
+                onChange={e => setStudent(e)}
+                placeholder="Selecionar aluno"
+              />
+            </div>
+            <section className="restante">
+              <div className="pack">
+                <span className="form">PLANO</span>
+                <CustomSelect
+                  name="plan_id"
+                  isSearchable={false}
+                  isClearable
+                  defaultOptions
+                  loadOptions={e => loadPlans(e)}
+                  value={plan}
+                  onChange={e => handlePlanChange(e)}
+                  placeholder="Selecionar plano"
+                />
+              </div>
+              <div className="pack">
+                <span className="form">DATA DE INÍCIO</span>
+                <CustomDatePicker
+                  selected={startDate}
+                  onChange={date => setStartDate(date)}
+                  minDate={new Date()}
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="Clique para escolher"
+                />
+              </div>
+              <div className="pack">
+                <span className="form">DATA DE TÉRMINO</span>
+                <Input
+                  name="dataTermino"
+                  disable
+                  value={endDate}
+                  className="form"
+                  readOnly
+                />
+              </div>
+              <div className="pack">
+                <span className="form">VALOR FINAL</span>
+                <Input
+                  name="valorFinal"
+                  disable
+                  value={totalPrice}
+                  className="form"
+                  readOnly
+                />
+              </div>
+            </section>
+          </Form>
+        </ContentForm>
+      </Content>
+    </Wrapper>
   );
 }

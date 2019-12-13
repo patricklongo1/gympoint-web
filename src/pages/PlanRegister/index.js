@@ -20,14 +20,14 @@ export default function PlanRegister() {
     history.push('/plans');
   }
 
-  async function handleSubmit(data, { resetForm }) {
+  async function handleSubmit(data) {
     try {
       setLoading(true);
       await api.post('plans', data);
 
       toast.success('Plano cadastrado com sucesso');
       setLoading(false);
-      resetForm();
+      history.push('/plans');
     } catch (error) {
       toast.error('Falha ao adicionar plano, verifique os dados');
       setLoading(false);

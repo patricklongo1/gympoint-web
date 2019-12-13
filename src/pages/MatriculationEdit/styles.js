@@ -129,6 +129,12 @@ export const ContentForm = styled.div`
       box-sizing: border-box;
       border-radius: 4px;
       margin: 0 auto;
+
+      &:read-only {
+        background: #999;
+        border: 1px solid #000;
+        color: #fff;
+      }
     }
 
     div.aluno {

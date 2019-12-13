@@ -55,8 +55,8 @@ export default function PlanList() {
         <thead>
           <tr>
             <th>TÍTULO</th>
-            <th>DURAÇÃO</th>
-            <th>VALOR p/ MÊS</th>
+            <th>DURAÇÃO (meses)</th>
+            <th>VALOR P/ MÊS</th>
             <th />
           </tr>
         </thead>
@@ -65,7 +65,7 @@ export default function PlanList() {
             <tr key={plan.id}>
               <td>{plan.title}</td>
               <td>{plan.duration}</td>
-              <td>{plan.price}</td>
+              <td>R${plan.price},00</td>
               <td>
                 <button type="button">
                   <FaEdit size={20} onClick={() => handleEdit(plan.id, plan)} />

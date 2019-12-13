@@ -26,6 +26,7 @@ export default function StudentEdit({ history: navigation }) {
         height,
       });
       toast.success('Dados do aluno atualizados');
+      history.push('/students');
     } catch (error) {
       toast.error('Falha ao tentar atualizar, verifique os dados');
     }
