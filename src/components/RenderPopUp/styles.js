@@ -49,7 +49,7 @@ export const Container = styled.div`
       padding: 15px;
 
       &:read-only {
-        background: #999;
+        background: #888;
       }
     }
 
@@ -70,7 +70,7 @@ export const Container = styled.div`
       }
 
       &:disabled {
-        background: #999;
+        background: #888;
       }
     }
 

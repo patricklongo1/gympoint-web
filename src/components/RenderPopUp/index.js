@@ -20,8 +20,8 @@ export default function RenderPopUp({ question, orderID, dispose }) {
         answer,
       });
       toast.success('Resposta enviada com sucesso!');
-      setAnswer('');
       setAnswered(true);
+      setAnswer('');
     } catch (error) {
       toast.success('Falha ao enviar resposta');
     }

@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-shadow */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
@@ -11,12 +11,22 @@ import api from '../../services/api';
 export default function PlanEdit({ history: navigation }) {
   const { plan } = navigation.location.state;
 
+  const [loading, setLoading] = useState(false);
+  const [durationT = 2, setDurationT] = useState('');
+  const [priceMonth = 2, setPriceMonth] = useState('');
+  const [priceTotal, setPriceTotal] = useState('');
+
+  useEffect(() => {
+    setPriceTotal(`R$${durationT * priceMonth},00`);
+  }, [durationT, priceMonth]);
+
   function handleBack() {
     history.push('/plans');
   }
 
   async function handleSubmit(data) {
     try {
+      setLoading(true);
       const { title, duration, price } = data;
       await api.put(`plans/${plan.id}`, {
         title,
@@ -24,10 +34,14 @@ export default function PlanEdit({ history: navigation }) {
         price,
       });
       toast.success('Dados do plano atualizados');
+      setLoading(false);
     } catch (error) {
-      toast.error('Falha ao tentar atualizar, verifique os dados');
+      toast.error('Falha ao tentar atualizar, preencha todos os campos');
+      setLoading(false);
     }
   }
+
+  console.tron.log(plan);
 
   return (
     <>
@@ -38,10 +52,10 @@ export default function PlanEdit({ history: navigation }) {
         </button>
 
         <button type="submit" form="plan">
-          SALVAR
+          {!loading ? 'SALVAR' : 'CARREGANDO...'}
         </button>
       </div>
-      <Form initialData={plan} onSubmit={handleSubmit} id="plan">
+      <Form onSubmit={handleSubmit} id="plan">
         <div>
           <span>TÍTULO DO PLANO</span>
           <Input name="title" placeholder="Nome do plano aqui" />
@@ -49,17 +63,20 @@ export default function PlanEdit({ history: navigation }) {
         <section>
           <div>
             <span>DURAÇÃO (em meses)</span>
-            <Input name="duration" />
+            <Input
+              name="duration"
+              onChange={e => setDurationT(e.target.value)}
+            />
           </div>
 
           <div>
             <span>PREÇO MENSAL</span>
-            <Input name="price" />
+            <Input name="price" onChange={e => setPriceMonth(e.target.value)} />
           </div>
 
           <div>
             <span>PREÇO TOTAL</span>
-            <Input name="totalPrice" />
+            <Input name="totalPrice" readOnly value={priceTotal} />
           </div>
         </section>
       </Form>

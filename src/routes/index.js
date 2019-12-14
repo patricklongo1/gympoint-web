@@ -45,7 +45,6 @@ export default function Routes() {
         path="/matriculationregister"
         component={MatriculationRegister}
         isPrivate
-        isForm
       />
 
       <Route path="/studentedit/:id" component={StudentEdit} isPrivate isForm />
@@ -54,7 +53,6 @@ export default function Routes() {
         path="/matriculationedit/:id"
         component={MatriculationEdit}
         isPrivate
-        isForm
       />
 
       <Route path="/" component={() => <h1>Error 404 - Not Found</h1>} />
