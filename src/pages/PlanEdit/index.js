@@ -1,8 +1,10 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
 
 import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
@@ -12,29 +14,37 @@ export default function PlanEdit({ history: navigation }) {
   const { plan } = navigation.location.state;
 
   const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState('');
   const [durationT = 2, setDurationT] = useState('');
   const [priceMonth = 2, setPriceMonth] = useState('');
   const [priceTotal, setPriceTotal] = useState('');
 
   useEffect(() => {
-    const tot = durationT * priceMonth;
-    setPriceTotal(`R$${tot.toFixed(2).replace('.', ',')}`);
+    const proceMonthFormated = priceMonth.replace('R$', '');
+    const tot = durationT * proceMonthFormated;
+    let result = null;
+    if (!isNaN(tot)) {
+      result = `R$${tot.toFixed(2).replace('.', ',')}`;
+    } else {
+      result = 'Calculando...';
+    }
+    setPriceTotal(result);
   }, [durationT, priceMonth]);
 
   function handleBack() {
     history.push('/plans');
   }
 
-  async function handleSubmit(data) {
+  async function handleSubmit() {
     try {
       setLoading(true);
-      const { title, duration, price } = data;
       await api.put(`plans/${plan.id}`, {
         title,
-        duration,
-        price,
+        duration: durationT,
+        price: priceMonth.replace('R$', ''),
       });
-      toast.success('Dados do plano atualizados');
+
+      toast.success('Plano cadastrado com sucesso');
       setLoading(false);
       history.push('/plans');
     } catch (error) {
@@ -43,7 +53,9 @@ export default function PlanEdit({ history: navigation }) {
     }
   }
 
-  console.tron.log(plan);
+  function handleInputTitle(e) {
+    setTitle(e.target.value);
+  }
 
   return (
     <>
@@ -60,7 +72,11 @@ export default function PlanEdit({ history: navigation }) {
       <Form onSubmit={handleSubmit} id="plan">
         <div>
           <span>TÍTULO DO PLANO</span>
-          <Input name="title" placeholder="Nome do plano aqui" />
+          <Input
+            name="title"
+            placeholder="Nome do plano aqui"
+            onChange={() => handleInputTitle(event)}
+          />
         </div>
         <section>
           <div>
@@ -73,7 +89,11 @@ export default function PlanEdit({ history: navigation }) {
 
           <div>
             <span>PREÇO MENSAL</span>
-            <Input name="price" onChange={e => setPriceMonth(e.target.value)} />
+            <InputMask
+              mask="R$99.99"
+              value={priceMonth}
+              onChange={e => setPriceMonth(e.target.value)}
+            />
           </div>
 
           <div>

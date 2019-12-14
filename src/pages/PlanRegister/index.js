@@ -2,29 +2,42 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import InputMask from 'react-input-mask';
 
 import history from '../../services/history';
 import api from '../../services/api';
 
 export default function PlanRegister() {
   const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState('');
   const [durationT = 2, setDurationT] = useState('');
   const [priceMonth = 2, setPriceMonth] = useState('');
   const [priceTotal, setPriceTotal] = useState('');
 
   useEffect(() => {
-    const tot = durationT * priceMonth;
-    setPriceTotal(`R$${tot.toFixed(2).replace('.', ',')}`);
+    const proceMonthFormated = priceMonth.replace('R$', '');
+    const tot = durationT * proceMonthFormated;
+    let result = null;
+    if (!isNaN(tot)) {
+      result = `R$${tot.toFixed(2).replace('.', ',')}`;
+    } else {
+      result = 'Calculando...';
+    }
+    setPriceTotal(result);
   }, [durationT, priceMonth]);
 
   function handleBack() {
     history.push('/plans');
   }
 
-  async function handleSubmit(data) {
+  async function handleSubmit() {
     try {
       setLoading(true);
-      await api.post('plans', data);
+      await api.post('plans', {
+        title,
+        duration: durationT,
+        price: priceMonth.replace('R$', ''),
+      });
 
       toast.success('Plano cadastrado com sucesso');
       setLoading(false);
@@ -33,6 +46,10 @@ export default function PlanRegister() {
       toast.error('Falha ao adicionar plano, verifique os dados');
       setLoading(false);
     }
+  }
+
+  function handleInputTitle(e) {
+    setTitle(e.target.value);
   }
 
   return (
@@ -50,7 +67,12 @@ export default function PlanRegister() {
       <Form id="plan" onSubmit={handleSubmit}>
         <div>
           <span>TÍTULO DO PLANO</span>
-          <Input name="title" placeholder="Nome do plano aqui" />
+          <Input
+            name="title"
+            placeholder="Nome do plano aqui"
+            value={title}
+            onChange={() => handleInputTitle(event)}
+          />
         </div>
         <section>
           <div>
@@ -64,8 +86,8 @@ export default function PlanRegister() {
 
           <div>
             <span>PREÇO MENSAL</span>
-            <Input
-              name="price"
+            <InputMask
+              mask="R$99.99"
               value={priceMonth}
               onChange={e => setPriceMonth(e.target.value)}
             />
