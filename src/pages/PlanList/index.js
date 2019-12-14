@@ -13,17 +13,13 @@ export default function PlanList() {
   useEffect(() => {
     async function loadPlans() {
       const response = await api.get('plans');
-      setPlans(response.data);
+      const formatedPlans = response.data.map(p => ({
+        ...p,
+        formatedPrice: p.price.toFixed(2).replace('.', ','),
+      }));
+      setPlans(formatedPlans);
     }
     loadPlans();
-  }, []);
-
-  useEffect(() => {
-    async function reloadStudents() {
-      const response = await api.get('plans');
-      setPlans(response.data);
-    }
-    reloadStudents();
   }, [deletes]);
 
   function handleRegister() {
@@ -64,8 +60,12 @@ export default function PlanList() {
           {plans.map(plan => (
             <tr key={plan.id}>
               <td>{plan.title}</td>
-              <td>{plan.duration}</td>
-              <td>R${plan.price},00</td>
+              <td>
+                {plan.duration === 1
+                  ? `${plan.duration} mês`
+                  : `${plan.duration} meses`}
+              </td>
+              <td>R${plan.formatedPrice}</td>
               <td>
                 <button type="button">
                   <FaEdit size={20} onClick={() => handleEdit(plan.id, plan)} />

@@ -49,7 +49,7 @@ export default function MatriculationRegister() {
 
   function handlePlanChange(e) {
     setPlan(e);
-    setTotalPrice(e ? `R$${e.totalPrice},00` : '');
+    setTotalPrice(e ? `R$${e.totalPrice.toFixed(2).replace('.', ',')}` : '');
   }
 
   async function loadStudents(q) {

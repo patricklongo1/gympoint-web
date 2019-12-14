@@ -69,7 +69,7 @@ export default function MatriculationEdit({ history: navigation }) {
 
   function handlePlanChange(e) {
     setPlan(e);
-    setTotalPrice(e ? `R$${e.totalPrice},00` : '');
+    setTotalPrice(e ? `R$${e.totalPrice.toFixed(2).replace('.', ',')}` : '');
   }
 
   return (

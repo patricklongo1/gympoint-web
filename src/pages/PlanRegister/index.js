@@ -13,7 +13,8 @@ export default function PlanRegister() {
   const [priceTotal, setPriceTotal] = useState('');
 
   useEffect(() => {
-    setPriceTotal(`R$${durationT * priceMonth},00`);
+    const tot = durationT * priceMonth;
+    setPriceTotal(`R$${tot.toFixed(2).replace('.', ',')}`);
   }, [durationT, priceMonth]);
 
   function handleBack() {

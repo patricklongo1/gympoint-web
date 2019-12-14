@@ -17,7 +17,8 @@ export default function PlanEdit({ history: navigation }) {
   const [priceTotal, setPriceTotal] = useState('');
 
   useEffect(() => {
-    setPriceTotal(`R$${durationT * priceMonth},00`);
+    const tot = durationT * priceMonth;
+    setPriceTotal(`R$${tot.toFixed(2).replace('.', ',')}`);
   }, [durationT, priceMonth]);
 
   function handleBack() {
@@ -35,6 +36,7 @@ export default function PlanEdit({ history: navigation }) {
       });
       toast.success('Dados do plano atualizados');
       setLoading(false);
+      history.push('/plans');
     } catch (error) {
       toast.error('Falha ao tentar atualizar, preencha todos os campos');
       setLoading(false);
