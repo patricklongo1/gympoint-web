@@ -101,7 +101,7 @@ export default function MatriculationList() {
         </thead>
         <tbody>
           {matriculations.map(matriculation => (
-            <tr>
+            <tr key={matriculation.id}>
               <td>
                 {matriculation.student !== null &&
                 matriculation.student !== undefined

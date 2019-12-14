@@ -124,7 +124,6 @@ export default function MatriculationEdit({ history: navigation }) {
                 <span className="form">DATA DE TÉRMINO</span>
                 <Input
                   name="dataTermino"
-                  disable
                   value={endDate}
                   className="form"
                   readOnly
@@ -134,7 +133,6 @@ export default function MatriculationEdit({ history: navigation }) {
                 <span className="form">VALOR FINAL</span>
                 <Input
                   name="valorFinal"
-                  disable
                   value={totalPrice}
                   className="form"
                   readOnly

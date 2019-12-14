@@ -46,9 +46,9 @@ export default function RenderPopUp({ question, orderID, dispose }) {
       <Container>
         <small>PERGUNTA DO ALUNO</small>
 
-        <p>
+        <div className="question">
           <Scroll>{question}</Scroll>
-        </p>
+        </div>
 
         <small>SUA RESPOSTA</small>
         <Form schema={schema} onSubmit={handleSubmit}>
@@ -70,6 +70,6 @@ export default function RenderPopUp({ question, orderID, dispose }) {
 
 RenderPopUp.propTypes = {
   question: PropTypes.string.isRequired,
-  orderID: PropTypes.string.isRequired,
+  orderID: PropTypes.number.isRequired,
   dispose: PropTypes.func.isRequired,
 };

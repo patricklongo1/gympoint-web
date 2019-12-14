@@ -139,7 +139,6 @@ export default function MatriculationRegister() {
                 <span className="form">DATA DE TÉRMINO</span>
                 <Input
                   name="dataTermino"
-                  disable
                   value={endDate}
                   className="form"
                   readOnly
@@ -149,7 +148,6 @@ export default function MatriculationRegister() {
                 <span className="form">VALOR FINAL</span>
                 <Input
                   name="valorFinal"
-                  disable
                   value={totalPrice}
                   className="form"
                   readOnly

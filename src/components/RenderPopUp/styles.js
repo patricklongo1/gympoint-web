@@ -27,7 +27,7 @@ export const Container = styled.div`
     color: #444444;
   }
 
-  p {
+  div.question {
     font-size: 18px;
     line-height: 26px;
     color: #444444;

@@ -37,7 +37,7 @@ export default function HelpOrderList() {
             <tbody>
               {helpOrders.length >= 0 ? (
                 helpOrders.map(order => (
-                  <tr>
+                  <tr key={order.id}>
                     <td>{order.student.name}</td>
                     <td>
                       <RenderPopUp
