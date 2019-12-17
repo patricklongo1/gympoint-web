@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -9,18 +10,27 @@ import api from '../../services/api';
 export default function PlanList() {
   const [plans, setPlans] = useState([]);
   const [deletes, setDeletes] = useState([]);
+  const [pages = 1, setPages] = useState();
+  const [lastPage, setLastPage] = useState(false);
 
   useEffect(() => {
     async function loadPlans() {
-      const response = await api.get('plans');
+      const response = await api.get('plans', {
+        params: { page: pages },
+      });
       const formatedPlans = response.data.map(p => ({
         ...p,
         formatedPrice: p.price.toFixed(2).replace('.', ','),
       }));
+      if (formatedPlans.length < 10) {
+        setLastPage(true);
+      } else {
+        setLastPage(false);
+      }
       setPlans(formatedPlans);
     }
     loadPlans();
-  }, [deletes]);
+  }, [deletes, pages]);
 
   function handleRegister() {
     history.push('/planregister');
@@ -37,6 +47,14 @@ export default function PlanList() {
       await api.delete(`plans/${id}`);
       setDeletes([...deletes, '1']);
     }
+  }
+
+  function handleDecreasePage() {
+    setPages(pages - 1);
+  }
+
+  function handleAddPage() {
+    setPages(pages + 1);
   }
 
   return (
@@ -67,10 +85,10 @@ export default function PlanList() {
               </td>
               <td>R${plan.formatedPrice}</td>
               <td>
-                <button type="button">
+                <button type="button" title="Editar">
                   <FaEdit size={20} onClick={() => handleEdit(plan.id, plan)} />
                 </button>
-                <button type="button">
+                <button type="button" title="Deletar">
                   <FaTrash size={20} onClick={() => handleDelete(plan.id)} />
                 </button>
               </td>
@@ -78,6 +96,23 @@ export default function PlanList() {
           ))}
         </tbody>
       </table>
+      <footer>
+        <button
+          type="button"
+          disabled={pages < 2}
+          onClick={() => handleDecreasePage()}
+        >
+          <MdChevronLeft size={30} />
+        </button>
+        <small>página: {pages}</small>
+        <button
+          type="button"
+          disabled={lastPage}
+          onClick={() => handleAddPage()}
+        >
+          <MdChevronRight size={30} />
+        </button>
+      </footer>
     </>
   );
 }

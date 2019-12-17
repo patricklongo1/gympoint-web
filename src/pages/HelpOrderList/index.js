@@ -35,10 +35,14 @@ export default function HelpOrderList() {
               </tr>
             </thead>
             <tbody>
-              {helpOrders.length >= 0 ? (
+              {helpOrders.length > 0 ? (
                 helpOrders.map(order => (
                   <tr key={order.id}>
-                    <td>{order.student.name}</td>
+                    <td>
+                      {order.student
+                        ? order.student.name
+                        : '***ALUNO DELETADO***'}
+                    </td>
                     <td>
                       <RenderPopUp
                         dispose={dispose}
@@ -50,7 +54,7 @@ export default function HelpOrderList() {
                 ))
               ) : (
                 <tr>
-                  <td>Não consta alunos na listagem</td>
+                  <td>Não existem perguntas na listagem</td>
                 </tr>
               )}
             </tbody>

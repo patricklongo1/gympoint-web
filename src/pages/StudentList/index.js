@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -10,14 +11,23 @@ export default function StudentList() {
   const [students, setStudents] = useState([]);
   const [deletes, setDeletes] = useState([]);
   const [input, setInput] = useState('');
+  const [pages = 1, setPages] = useState();
+  const [lastPage, setLastPage] = useState(false);
 
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get(`students/${input}`);
+      const response = await api.get(`students`, {
+        params: { q: input, page: pages },
+      });
+      if (response.data.length < 10) {
+        setLastPage(true);
+      } else {
+        setLastPage(false);
+      }
       setStudents(response.data);
     }
     loadStudents();
-  }, [input, deletes]);
+  }, [input, deletes, pages]);
 
   function handleRegister() {
     history.push('/studentregister');
@@ -38,6 +48,14 @@ export default function StudentList() {
 
   function handleInput(e) {
     setInput(e.target.value);
+  }
+
+  function handleDecreasePage() {
+    setPages(pages - 1);
+  }
+
+  function handleAddPage() {
+    setPages(pages + 1);
   }
 
   return (
@@ -73,13 +91,13 @@ export default function StudentList() {
                 <td>{student.email}</td>
                 <td>{student.age}</td>
                 <td>
-                  <button type="button">
+                  <button type="button" title="Editar">
                     <FaEdit
                       size={20}
                       onClick={() => handleEdit(student.id, student)}
                     />
                   </button>
-                  <button type="button">
+                  <button type="button" title="Deletar">
                     <FaTrash
                       size={20}
                       onClick={() => handleDelete(student.id)}
@@ -95,6 +113,23 @@ export default function StudentList() {
           )}
         </tbody>
       </table>
+      <footer>
+        <button
+          type="button"
+          disabled={pages < 2}
+          onClick={() => handleDecreasePage()}
+        >
+          <MdChevronLeft size={30} />
+        </button>
+        <small>página: {pages}</small>
+        <button
+          type="button"
+          disabled={lastPage}
+          onClick={() => handleAddPage()}
+        >
+          <MdChevronRight size={30} />
+        </button>
+      </footer>
     </>
   );
 }

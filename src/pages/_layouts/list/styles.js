@@ -89,4 +89,42 @@ export const Content = styled.div`
       }
     }
   }
+
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      margin: 0 50px;
+      background: #ee4d64;
+      border: 0;
+      border-radius: 50%;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.15, '#ee4d64')};
+      }
+
+      &:disabled {
+        background: #ddd;
+      }
+
+      svg {
+        color: #fff;
+      }
+    }
+
+    small {
+      font-size: 14px;
+      color: #888;
+    }
+  }
 `;

@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaEdit, FaCheck, FaExclamation } from 'react-icons/fa';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -11,10 +12,14 @@ import api from '../../services/api';
 export default function MatriculationList() {
   const [matriculations, setMatriculations] = useState([]);
   const [deletes, setDeletes] = useState([]);
+  const [pages = 1, setPages] = useState();
+  const [lastPage, setLastPage] = useState(false);
 
   useEffect(() => {
     async function loadMatriculations() {
-      const response = await api.get('matriculations');
+      const response = await api.get('matriculations', {
+        params: { page: pages },
+      });
 
       const mats = response.data.map(matriculation => ({
         ...matriculation,
@@ -33,10 +38,15 @@ export default function MatriculationList() {
           }
         ),
       }));
+      if (mats.length < 10) {
+        setLastPage(true);
+      } else {
+        setLastPage(false);
+      }
       setMatriculations(mats);
     }
     loadMatriculations();
-  }, []);
+  }, [pages]);
 
   useEffect(() => {
     async function reloadStudents() {
@@ -80,6 +90,14 @@ export default function MatriculationList() {
     }
   }
 
+  function handleDecreasePage() {
+    setPages(pages - 1);
+  }
+
+  function handleAddPage() {
+    setPages(pages + 1);
+  }
+
   return (
     <>
       <div>
@@ -106,30 +124,30 @@ export default function MatriculationList() {
                 {matriculation.student !== null &&
                 matriculation.student !== undefined
                   ? matriculation.student.name
-                  : '***Aluno deletado***'}
+                  : '***ALUNO DELETADO***'}
               </td>
               <td>
                 {matriculation.plan !== null && matriculation.plan !== undefined
                   ? matriculation.plan.title
-                  : '***plano deletado***'}
+                  : '***PLANO DELETADO***'}
               </td>
               <td>{matriculation.start_formatedDate}</td>
               <td>{matriculation.end_formatedDate}</td>
               <td>
                 {matriculation.active ? (
-                  <FaCheck size={20} />
+                  <FaCheck size={20} color="green" />
                 ) : (
-                  <FaExclamation size={20} />
+                  <FaExclamation size={20} color="red" />
                 )}
               </td>
               <td>
-                <button type="button">
+                <button type="button" title="Editar">
                   <FaEdit
                     size={20}
                     onClick={() => handleEdit(matriculation.id, matriculation)}
                   />
                 </button>
-                <button type="button">
+                <button type="button" title="Deletar">
                   <FaTrash
                     size={20}
                     onClick={() => handleDelete(matriculation.id)}
@@ -140,6 +158,23 @@ export default function MatriculationList() {
           ))}
         </tbody>
       </table>
+      <footer>
+        <button
+          type="button"
+          disabled={pages < 2}
+          onClick={() => handleDecreasePage()}
+        >
+          <MdChevronLeft size={30} />
+        </button>
+        <small>página: {pages}</small>
+        <button
+          type="button"
+          disabled={lastPage}
+          onClick={() => handleAddPage()}
+        >
+          <MdChevronRight size={30} />
+        </button>
+      </footer>
     </>
   );
 }
