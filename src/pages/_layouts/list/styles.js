@@ -95,7 +95,8 @@ export const Content = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 15px;
+    padding: 20px 0;
+    margin: 20px auto;
 
     button {
       display: flex;
