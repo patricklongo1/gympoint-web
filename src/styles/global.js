@@ -18,6 +18,7 @@ export default createGlobalStyle`
         height: 100%;
     }
     body {
+        background: #f5f5f5;
         -webkit-font-smoothing: antialiased !important;
         text-rendering: optimizeLegibility !important;
     }
