@@ -25,8 +25,7 @@ export default function StudentRegister() {
         weight,
         height,
       });
-
-      toast.success('Aluno cadastrado com sucesso');
+      toast.success(String('Aluno cadastrado com sucesso'));
       setLoading(false);
       resetForm();
     } catch (error) {

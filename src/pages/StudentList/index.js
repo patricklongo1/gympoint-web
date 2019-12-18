@@ -43,6 +43,7 @@ export default function StudentList() {
     if (conf) {
       await api.delete(`students/${id}`);
       setDeletes([...deletes, '1']);
+      setInput('');
     }
   }
 

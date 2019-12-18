@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import InputMask from 'react-input-mask';
+import CurrencyFormat from 'react-currency-format';
 
 import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
@@ -15,13 +15,12 @@ export default function PlanEdit({ history: navigation }) {
 
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState('');
-  const [durationT = 2, setDurationT] = useState('');
-  const [priceMonth = 2, setPriceMonth] = useState('');
+  const [durationT, setDurationT] = useState('');
+  const [priceMonth, setPriceMonth] = useState('');
   const [priceTotal, setPriceTotal] = useState('');
 
   useEffect(() => {
-    const proceMonthFormated = priceMonth.replace('R$', '');
-    const tot = durationT * proceMonthFormated;
+    const tot = durationT * priceMonth;
     let result = null;
     if (!isNaN(tot)) {
       result = `R$${tot.toFixed(2).replace('.', ',')}`;
@@ -57,6 +56,11 @@ export default function PlanEdit({ history: navigation }) {
     setTitle(e.target.value);
   }
 
+  function handleInput(values) {
+    const { value } = values;
+    setPriceMonth(value);
+  }
+
   return (
     <>
       <div>
@@ -89,10 +93,15 @@ export default function PlanEdit({ history: navigation }) {
 
           <div>
             <span>PREÇO MENSAL</span>
-            <InputMask
-              mask="R$99.99"
-              value={priceMonth}
-              onChange={e => setPriceMonth(e.target.value)}
+            <CurrencyFormat
+              thousandSeparator="."
+              decimalSeparator=","
+              decimalScale={2}
+              fixedDecimalScale
+              decimalPrecision={2}
+              prefix="R$ "
+              isNumericString
+              onValueChange={values => handleInput(values)}
             />
           </div>
 
