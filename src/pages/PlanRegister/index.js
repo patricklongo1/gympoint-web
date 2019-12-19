@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
-import CurrencyFormat from 'react-currency-format';
+import CurrencyInput from 'react-currency-input';
 
 import history from '../../services/history';
 import api from '../../services/api';
@@ -35,7 +35,7 @@ export default function PlanRegister() {
       await api.post('plans', {
         title,
         duration: durationT,
-        price: priceMonth.replace('R$', ''),
+        price: parseFloat(priceMonth),
       });
 
       toast.success('Plano cadastrado com sucesso');
@@ -51,9 +51,8 @@ export default function PlanRegister() {
     setTitle(e.target.value);
   }
 
-  function handleInput(values) {
-    const { value } = values;
-    setPriceMonth(value);
+  function handleInput(floatvalue) {
+    setPriceMonth(floatvalue);
   }
 
   return (
@@ -90,15 +89,14 @@ export default function PlanRegister() {
 
           <div>
             <span>PREÇO MENSAL</span>
-            <CurrencyFormat
+            <CurrencyInput
               thousandSeparator="."
               decimalSeparator=","
-              decimalScale={2}
-              fixedDecimalScale
-              decimalPrecision={2}
+              precision="2"
               prefix="R$ "
-              isNumericString
-              onValueChange={values => handleInput(values)}
+              value={priceMonth}
+              selectAllOnFocus
+              onChange={(_, floatvalue) => handleInput(floatvalue)}
             />
           </div>
 

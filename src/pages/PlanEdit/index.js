@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
-import CurrencyFormat from 'react-currency-format';
+import CurrencyInput from 'react-currency-input';
 
 import { Form, Input } from '@rocketseat/unform';
 import history from '../../services/history';
@@ -40,7 +40,7 @@ export default function PlanEdit({ history: navigation }) {
       await api.put(`plans/${plan.id}`, {
         title,
         duration: durationT,
-        price: priceMonth.replace('R$', ''),
+        price: parseFloat(priceMonth),
       });
 
       toast.success('Plano cadastrado com sucesso');
@@ -56,9 +56,8 @@ export default function PlanEdit({ history: navigation }) {
     setTitle(e.target.value);
   }
 
-  function handleInput(values) {
-    const { value } = values;
-    setPriceMonth(value);
+  function handleInput(floatvalue) {
+    setPriceMonth(floatvalue);
   }
 
   return (
@@ -93,15 +92,14 @@ export default function PlanEdit({ history: navigation }) {
 
           <div>
             <span>PREÇO MENSAL</span>
-            <CurrencyFormat
+            <CurrencyInput
               thousandSeparator="."
               decimalSeparator=","
-              decimalScale={2}
-              fixedDecimalScale
-              decimalPrecision={2}
+              precision="2"
               prefix="R$ "
-              isNumericString
-              onValueChange={values => handleInput(values)}
+              value={priceMonth}
+              selectAllOnFocus
+              onChange={(_, floatvalue) => handleInput(floatvalue)}
             />
           </div>
 
