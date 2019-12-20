@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.div`
+  margin: 40px auto;
   min-height: 448px;
   width: 100%;
   max-width: 360px;
