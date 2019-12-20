@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import api from '../../../services/api';
 
 import history from '../../../services/history';
-import { signInSuccess, signFailure } from './actions';
+import { signInSuccess, signFailure, signUpSuccess } from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -40,8 +40,26 @@ export function signOut() {
   history.push('/');
 }
 
+export function* signUp({ payload }) {
+  try {
+    const { email, name, password } = payload;
+    yield call(api.post, 'users', {
+      email,
+      name,
+      password,
+    });
+    yield put(signUpSuccess());
+    toast.success('Usuário cadastrado com sucesso.');
+    history.push('/');
+  } catch (error) {
+    toast.error('Falha ao cadastrar usuário, verifique os dados');
+    yield put(signFailure());
+  }
+}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
 ]);

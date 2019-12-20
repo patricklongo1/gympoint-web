@@ -1,8 +1,12 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+
 import logo from '../../assets/logo.svg';
+import { signUpRequest } from '../../store/modules/auth/actions';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -16,12 +20,23 @@ const schema = Yup.object().shape({
 });
 
 export default function SingUp() {
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
+
+  async function handleSubmit({ email, name, password, passwordConfirm }) {
+    if (password === passwordConfirm) {
+      dispatch(signUpRequest(email, name, password));
+    } else {
+      toast.error('Senha e confirmação de senha não são iguais');
+    }
+  }
+
   return (
     <>
       <img src={logo} alt="GymPoint" />
       <h3>GYMPOINT</h3>
 
-      <Form schema={schema}>
+      <Form schema={schema} onSubmit={handleSubmit}>
         <small>SEU E-MAIL</small>
         <Input name="email" type="email" placeholder="exemplo@email.com" />
 
@@ -34,7 +49,9 @@ export default function SingUp() {
         <small>CONFIRME A SENHA</small>
         <Input name="passwordConfirm" type="password" placeholder="*********" />
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">
+          {loading ? 'Carregando...' : 'Cadastrar'}{' '}
+        </button>
         <Link to="/">Já tenho conta</Link>
       </Form>
     </>
